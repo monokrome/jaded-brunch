@@ -1,2 +1,2 @@
-# {{NAME}}-brunch 1.4.0 (unreleased)
+# {{NAME}}-brunch 1.5.0 (unreleased)
 * Initial release
