@@ -59,7 +59,7 @@ module.exports = class JadedBrunchPlugin
     options = @makeOptions data
 
     errorHandler = (error) -> callback error
-    successHandler = (template) ->
+    successHandler = (template) =>
       output = template options
 
       if @staticPatterns?
