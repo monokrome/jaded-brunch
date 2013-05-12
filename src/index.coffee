@@ -12,7 +12,7 @@ module.exports = class JadedBrunchPlugin
   jadeOptions: {}
 
   staticPath: 'public'
-  projectPath: process.cwd()
+  projectPath: path.resolve process.cwd()
 
   constructor: (@config) ->
     @configure()
