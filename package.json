@@ -1,7 +1,7 @@
 {
   "name": "jaded-brunch",
   "description": "Adds {{DESCRIPTION}} support to brunch.",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "author": "Brandon R. Stoner <monokrome@monokro.me>",
   "homepage": "https://github.com/monokrome/jaded-brunch",
   "repository": {
