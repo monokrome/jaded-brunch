@@ -6,7 +6,7 @@ _ = require 'lodash'
 
 module.exports = class JadedBrunchPlugin
   brunchPlugin: yes
-  type: 'javascript'
+  type: 'template'
   extension: 'jade'
   jadeOptions: {}
   staticPath: 'public'
