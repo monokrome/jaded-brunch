@@ -22,7 +22,7 @@ module.exports = class JadedBrunchPlugin
       options = @config.plugins.jaded
 
       if options.staticPatterns?
-        @staticPatterns = @config.staticPatterns
+        @staticPatterns = options.staticPatterns
 
       if options.jade?
         @jadeOptions = options.jade
