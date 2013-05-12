@@ -1,5 +1,6 @@
 jade = require 'jade'
 fs = require 'fs'
+path = require 'path'
 
 Q = require 'q'
 _ = require 'lodash'
@@ -9,7 +10,9 @@ module.exports = class JadedBrunchPlugin
   type: 'template'
   extension: 'jade'
   jadeOptions: {}
+
   staticPath: 'public'
+  projectPath: process.cwd()
 
   constructor: (@config) ->
     @configure()
