@@ -41,11 +41,11 @@ module.exports = class JadedBrunchPlugin
     options = _.extend {}, @jadeOptions,
       locals: data
 
-  templateFactory: (options, path) ->
+  templateFactory: (options, templatePath) ->
     deferred = Q.defer()
 
     # TODO: Should I really assume utf-8?
-    promise = fs.readFile path, 'utf-8', (error, data) ->
+    promise = fs.readFile templatePath, 'utf-8', (error, data) ->
       if error
         deferred.reject new Error error
       else
@@ -54,7 +54,8 @@ module.exports = class JadedBrunchPlugin
 
     return deferred.promise
 
-  compile: (data, path, callback) ->
+  compile: (data, originalPath, callback) ->
+    templatePath = path.resolve originalPath
     options = @makeOptions data
 
     errorHandler = (error) -> callback error
