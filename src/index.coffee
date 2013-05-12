@@ -1,6 +1,7 @@
 jade = require 'jade'
 fs = require 'fs'
 path = require 'path'
+mkdirp = require 'mkdirp'
 
 Q = require 'q'
 _ = require 'lodash'
@@ -63,16 +64,37 @@ module.exports = class JadedBrunchPlugin
       output = template options
 
       if @staticPatterns?
+        relativePath = path.relative @projectPath, templatePath
+
         if not _.isArray @staticPatterns
           patterns = [@staticPatterns]
         else 
           patterns = @staticPatterns
 
-        results = _.filter patterns, (pattern) -> pattern.test templatePath
+        results = _.filter patterns, (pattern) -> pattern.test relativePath
 
-        if results.indexOf true != -1
-          # TODO: Create static files. 
-          return false
+        if results.length
+          staticPath = path.join @projectPath, @staticPath
+          matches = relativePath.match results[0]
+
+          outputPath = matches[matches.length-1]
+          outputPath = outputPath[0..outputPath.length-@extension.length-2]
+          outputPath = "#{outputPath}.html"
+
+          outputPath = path.join staticPath, outputPath
+          outputDirectory = path.join staticPath, path.dirname outputPath
+
+          # TODO: Save this block from an eternity in callback hell.
+          mkdirp outputDirectory, (err)->
+            if err
+              callback err, null
+            else
+                fs.writeFile outputPath, output, (err, written, buffer) ->
+                  if err
+                    callback err, null
+                  else
+                    # TODO: Tell brunch to skip this compilation.
+                    callback null, output
 
       callback null, output
 
