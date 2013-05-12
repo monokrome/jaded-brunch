@@ -59,7 +59,7 @@ module.exports = class JadedBrunchPlugin
       output = template options
 
       if @staticPatterns?
-        if not _.isArray @staticPatterns.test
+        if not _.isArray @staticPatterns
           patterns = [@staticPatterns]
         else 
           patterns = @staticPatterns
