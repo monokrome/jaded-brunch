@@ -15,7 +15,7 @@ module.exports = class JadedBrunchPlugin
   configure: ->
     if @config.plugins?.jaded?
       options = @config.plugins.jaded
-        
+
       if options.staticPatterns?
         @staticPatterns = @config.staticPatterns
 
