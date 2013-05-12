@@ -70,7 +70,8 @@ module.exports = class JadedBrunchPlugin
 
       callback null, output
 
-    @templateFactory options, path
-      .done successHandler
-      .fail errorHandler
+    promise = @templateFactory options, path
+
+    promise.done successHandler
+    promise.fail errorHandler
 
