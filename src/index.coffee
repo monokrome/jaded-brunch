@@ -20,6 +20,9 @@ module.exports = class JadedBrunchPlugin
     @configure()
 
   configure: ->
+    if @config.paths?.public?
+      @staticPath = @config.paths.public
+
     if @config.plugins?.jaded?
       options = @config.plugins.jaded
 
