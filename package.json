@@ -1,12 +1,12 @@
 {
-  "name": "{{NAME}}-brunch",
-  "version": "1.5.0",
+  "name": "jaded-brunch",
   "description": "Adds {{DESCRIPTION}} support to brunch.",
-  "author": "Paul Miller (http://paulmillr.com/)",
-  "homepage": "https://github.com/brunch/{{NAME}}-brunch",
+  "version": "1.6.0",
+  "author": "Brandon R. Stoner <monokrome@monokro.me>",
+  "homepage": "https://github.com/monokrome/jaded-brunch",
   "repository": {
     "type": "git",
-    "url": "git@github.com:brunch/{{NAME}}-brunch.git"
+    "url": "git@github.com:monokrome/jaded-brunch.git"
   },
   "main": "./lib/index",
   "scripts": {

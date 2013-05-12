@@ -1,4 +1,4 @@
-module.exports = class {{NAME}}
+module.exports = class JadedBrunchPlugin
   brunchPlugin: yes
 
   constructor: (@config) ->
