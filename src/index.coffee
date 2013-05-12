@@ -21,8 +21,9 @@ module.exports = class JadedBrunchPlugin
 
       if options.jade?
         @jadeOptions = options.jade
-      else
-        @jadeOptions = {}
+
+    if !@jadeOptions?
+      @jadeOptions = {}
 
   makeOptions: (data) ->
     # Allow for default data in the jade options hash
