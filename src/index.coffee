@@ -68,7 +68,7 @@ module.exports = class JadedBrunchPlugin
         else 
           patterns = @staticPatterns
 
-        results = _.filter patterns, (pattern) -> pattern.test path
+        results = _.filter patterns, (pattern) -> pattern.test templatePath
 
         if results.indexOf true != -1
           # TODO: Create static files. 
