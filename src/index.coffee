@@ -9,6 +9,7 @@ module.exports = class JadedBrunchPlugin
   type: 'javascript'
   extension: 'jade'
   jadeOptions: {}
+  staticPath: 'public'
 
   constructor: (@config) ->
     @configure()
@@ -22,6 +23,9 @@ module.exports = class JadedBrunchPlugin
 
       if options.jade?
         @jadeOptions = options.jade
+
+      if options.path?
+        @staticPath = options.path
 
   makeOptions: (data) ->
     # Allow for default data in the jade options hash
