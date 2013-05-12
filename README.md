@@ -10,5 +10,5 @@ Or, do manual install:
   Pick a plugin version that corresponds to your minor (y) brunch version.
 
 * If you want to use git version of plugin, add
-  `"jaded-brunch": "git+ssh://git@github.com:brunch/jaded-brunch.git"`.
+  `"jaded-brunch": "git+ssh://git@github.com:monokrome/jaded-brunch.git"`.
 
