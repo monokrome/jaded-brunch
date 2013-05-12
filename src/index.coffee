@@ -8,6 +8,7 @@ module.exports = class JadedBrunchPlugin
   brunchPlugin: yes
   type: 'javascript'
   extension: 'jade'
+  jadeOptions: {}
 
   constructor: (@config) ->
     @configure()
@@ -21,9 +22,6 @@ module.exports = class JadedBrunchPlugin
 
       if options.jade?
         @jadeOptions = options.jade
-
-    if !@jadeOptions?
-      @jadeOptions = {}
 
   makeOptions: (data) ->
     # Allow for default data in the jade options hash
