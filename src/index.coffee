@@ -6,6 +6,8 @@ mkdirp = require 'mkdirp'
 Q = require 'q'
 _ = require 'lodash'
 
+jadePath = path.dirname require.resolve 'jade'
+
 module.exports = class JadedBrunchPlugin
   brunchPlugin: yes
   type: 'template'
@@ -14,7 +16,12 @@ module.exports = class JadedBrunchPlugin
 
   staticPath: 'public'
   projectPath: path.resolve process.cwd()
+
   staticPatterns: /^app(\/|\\)(.+\.static\.jade)$/
+
+  include: [
+    path.join jadePath, 'runtime.js'
+  ]
 
   constructor: (@config) ->
     @configure()
@@ -63,22 +70,21 @@ module.exports = class JadedBrunchPlugin
     templatePath = path.resolve originalPath
     options = @makeOptions data
 
+    if not _.isArray @staticPatterns
+      patterns = [@staticPatterns]
+    else 
+      patterns = @staticPatterns
+
+    relativePath = path.relative @projectPath, templatePath
+    pathTestResults = _.filter patterns, (pattern) -> pattern.test relativePath
+
     errorHandler = (error) -> callback error
     successHandler = (template) =>
-      output = template options
+      if pathTestResults.length
+        output = template options
 
-      relativePath = path.relative @projectPath, templatePath
-
-      if not _.isArray @staticPatterns
-        patterns = [@staticPatterns]
-      else 
-        patterns = @staticPatterns
-
-      results = _.filter patterns, (pattern) -> pattern.test relativePath
-
-      if results.length
         staticPath = path.join @projectPath, @staticPath
-        matches = relativePath.match results[0]
+        matches = relativePath.match pathTestResults[0]
 
         outputPath = matches[matches.length-1]
         outputPath = outputPath[0..outputPath.length-@extension.length-2]
@@ -97,9 +103,13 @@ module.exports = class JadedBrunchPlugin
                   callback err, null
                 else
                   # TODO: Tell brunch to skip this compilation.
-                  callback null, output
+                  callback null, ''
+
       else
-        callback null, output
+        callback null, "module.exports = #{template.toString()};"
+
+    options = _.extend {}, options,
+      client: pathTestResults.length == 0
 
     promise = @templateFactory options, templatePath
 
