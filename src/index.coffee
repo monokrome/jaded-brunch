@@ -17,7 +17,7 @@ module.exports = class JadedBrunchPlugin
   staticPath: 'public'
   projectPath: path.resolve process.cwd()
 
-  staticPatterns: /^app(\/|\\)(.+\.static\.jade)$/
+  staticPatterns: /^app(\/|\\)(.+)\.static\.jade$/
 
   include: [
     path.join jadePath, 'runtime.js'
@@ -87,7 +87,12 @@ module.exports = class JadedBrunchPlugin
         matches = relativePath.match pathTestResults[0]
 
         outputPath = matches[matches.length-1]
-        outputPath = outputPath[0..outputPath.length-@extension.length-2]
+
+        extensionStartIndex = (outputPath.length - @extension.length)
+
+        if outputPath[extensionStartIndex..] == @extension
+          outputPath = outputPath[0..extensionStartIndex-2]
+
         outputPath = "#{outputPath}.html"
 
         outputPath = path.join staticPath, outputPath
