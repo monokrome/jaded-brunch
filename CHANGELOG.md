@@ -1,2 +1,3 @@
-# {{NAME}}-brunch 1.5.0 (1 January 2013)
-* Initial release
+# jaded-brunch 1.6.3 (1 January 2013)
+
+- Provided filename option to jade for static files.
