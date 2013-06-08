@@ -81,8 +81,6 @@ module.exports = class JadedBrunchPlugin
     errorHandler = (error) -> callback error
     successHandler = (template) =>
       if pathTestResults.length
-        options.filename = options.filename or relativePath
-
         output = template options
 
         staticPath = path.join @projectPath, @staticPath
@@ -117,6 +115,8 @@ module.exports = class JadedBrunchPlugin
 
     options = _.extend {}, options,
       client: pathTestResults.length == 0
+
+    options.filename = options.filename or relativePath
 
     promise = @templateFactory options, templatePath
 
