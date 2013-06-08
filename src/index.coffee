@@ -72,7 +72,7 @@ module.exports = class JadedBrunchPlugin
 
     if not _.isArray @staticPatterns
       patterns = [@staticPatterns]
-    else 
+    else
       patterns = @staticPatterns
 
     relativePath = path.relative @projectPath, templatePath
@@ -81,6 +81,8 @@ module.exports = class JadedBrunchPlugin
     errorHandler = (error) -> callback error
     successHandler = (template) =>
       if pathTestResults.length
+        options.filename = options.filename or relativePath
+
         output = template options
 
         staticPath = path.join @projectPath, @staticPath
