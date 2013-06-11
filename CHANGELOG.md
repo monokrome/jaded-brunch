@@ -1,3 +1,7 @@
+# jaded-brunch 1.6.5 (11th June, 2013)
+
+- Upgraded jade requirements to use latest version.
+
 # jaded-brunch 1.6.4 (11th June, 2013)
 
 - Added support for resolving dependencies for watcher for the following
