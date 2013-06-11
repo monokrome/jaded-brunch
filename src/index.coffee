@@ -18,6 +18,7 @@ module.exports = class JadedBrunchPlugin
   projectPath: path.resolve process.cwd()
 
   staticPatterns: /^app(\/|\\)(.+)\.static\.jade$/
+  dependenciesPattern: /\s*(?:include|extends)\s+([^\s]+)/
 
   include: [
     path.join jadePath, 'runtime.js'
@@ -122,4 +123,21 @@ module.exports = class JadedBrunchPlugin
 
     promise.done successHandler
     promise.fail errorHandler
+
+  getDependencies: (data, originalPath, callback) ->
+    matches = data.match @dependenciesPattern
+    relativeDirectory = path.dirname originalPath
+
+    if matches and matches.length > 1
+      dependencyFiles = matches[1..]
+      results = _.map dependencyFiles, (fileName) =>
+        if fileName[fileName.length-@extension.length..] != @extension
+          fileName = "#{fileName}.#{@extension}"
+
+        path.join relativeDirectory, fileName
+
+    else
+      results = []
+
+    callback null, results
 
