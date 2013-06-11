@@ -18,3 +18,7 @@
 
 - Added default support to automatically use the default public path setting.
 
+# jaded-brunch 1.6.0 (12 May, 2013)
+
+- Initial working support of static jade rendering.
+- Created plugin.
