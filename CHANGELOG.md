@@ -14,3 +14,7 @@
 - Finished client-side jade rendering support.
 - Modified static paths pattern to not include .static in output filenames.
 
+# jaded-brunch 1.6.1 (12th May, 2013)
+
+- Added default support to automatically use the default public path setting.
+
