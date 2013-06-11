@@ -134,8 +134,6 @@ module.exports = class JadedBrunchPlugin
         fileNameParts = _.filter fileName.split ' '
         fileName = fileNameParts[fileNameParts.length - 1]
 
-        console.log fileName
-
         if fileName[fileName.length-@extension.length..] != @extension
           fileName = "#{fileName}.#{@extension}"
 
