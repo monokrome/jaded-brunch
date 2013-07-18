@@ -50,3 +50,18 @@ do this, you would use the following pattern:
 Now, the file `app/static/about/contact_us.jade` will be statically compiled
 as 'about/contact_us.html' in your public directory.
 
+You can also pass arbitrary options to the jade compiler. This is done with
+the `jade` option, so if you wanted your output to enable the pretty setting
+you could use the following:
+
+    exports.config =
+      plugins:
+        jaded:
+          jade:
+            pretty: yes
+
+All options from [the jade API][api] can be provided this way.
+
+
+[api]: http://jade-lang.com/api/ "Jade API"
+
