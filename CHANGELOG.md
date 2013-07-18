@@ -1,3 +1,7 @@
+# jaded-brunch 1.7.0
+
+- Added support for returning null from compiler.
+
 # jaded-brunch 1.6.6 (11th June, 2013)
 
 - Fixed issue caused by having more than one dependency in a file.
