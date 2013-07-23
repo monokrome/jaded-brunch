@@ -1,3 +1,9 @@
+# jaded-brunch 1.7.1
+
+- Updated jade to 0.33.0
+- Fixued issue where jade errors terminated brunch.
+  - Brunch should watch for plugin errors like this.
+
 # jaded-brunch 1.7.0
 
 - Added support for returning null from compiler.

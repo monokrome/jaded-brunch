@@ -4,7 +4,7 @@
 
   "author": "Brandon R. Stoner <monokrome@monokro.me>",
   "homepage": "https://github.com/monokrome/jaded-brunch",
-  "version": "1.7.0",
+  "version": "1.7.1",
 
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
   },
 
   "dependencies": {
-    "jade": ">= 0.31.0",
+    "jade": ">= 0.33.0",
     "lodash": ">= 1.2.0 < 1.3.0",
     "q": ">= 0.9.0 < 0.10",
     "mkdirp": "0.3.5"
