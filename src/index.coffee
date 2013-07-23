@@ -119,7 +119,11 @@ module.exports = class JadedBrunchPlugin
 
     options.filename = options.filename or relativePath
 
-    promise = @templateFactory options, templatePath
+    try
+      promise = @templateFactory options, templatePath
+
+    catch err
+      callback err
 
     promise.done successHandler
     promise.fail errorHandler
