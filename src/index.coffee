@@ -104,12 +104,12 @@ module.exports = class JadedBrunchPlugin
           if err
             callback err, null
           else
-              fs.writeFile outputPath, output, (err, written, buffer) ->
-                if err
-                  callback err, null
-                else
-                  # TODO: Tell brunch to skip this compilation.
-                  callback()
+            fs.writeFile outputPath, output, (err, written, buffer) ->
+              if err
+                callback err, null
+              else
+                # TODO: Tell brunch to skip this compilation.
+                callback()
 
       else
         callback null, "module.exports = #{template.toString()};"
