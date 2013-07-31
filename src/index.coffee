@@ -2,6 +2,7 @@ jade = require 'jade'
 fs = require 'fs'
 path = require 'path'
 mkdirp = require 'mkdirp'
+progeny = require 'progeny'
 
 Q = require 'q'
 _ = require 'lodash'
@@ -18,7 +19,6 @@ module.exports = class JadedBrunchPlugin
   projectPath: path.resolve process.cwd()
 
   staticPatterns: /^app(\/|\\)(.+)\.static\.jade$/
-  dependenciesPattern: /\s*(?:include|extends)\s+([^\s]+)/g
 
   include: [
     path.join jadePath, 'runtime.js'
@@ -26,6 +26,10 @@ module.exports = class JadedBrunchPlugin
 
   constructor: (@config) ->
     @configure()
+
+    @getDependencies = progeny
+      extension: @extension
+      rootPath: @config.paths.root
 
   configure: ->
     if @config.paths?.public?
@@ -127,24 +131,4 @@ module.exports = class JadedBrunchPlugin
 
     promise.done successHandler
     promise.fail errorHandler
-
-  getDependencies: (data, originalPath, callback) ->
-    matches = data.match @dependenciesPattern
-    relativeDirectory = path.dirname originalPath
-
-    if matches and matches.length > 1
-      dependencyFiles = matches[1..]
-      results = _.map dependencyFiles, (fileName) =>
-        fileNameParts = _.filter fileName.split ' '
-        fileName = fileNameParts[fileNameParts.length - 1]
-
-        if fileName[fileName.length-@extension.length..] != @extension
-          fileName = "#{fileName}.#{@extension}"
-
-        path.join relativeDirectory, fileName
-
-    else
-      results = []
-
-    callback null, results
 

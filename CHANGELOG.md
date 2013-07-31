@@ -1,3 +1,8 @@
+# jaded-brunch 1.7.2
+
+- Modified getDependencies to use progeny
+  - https://github.com/es128/progeny/
+
 # jaded-brunch 1.7.1
 
 - Updated jade to 0.33.0
