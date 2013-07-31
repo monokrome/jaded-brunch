@@ -28,7 +28,6 @@ module.exports = class JadedBrunchPlugin
     @configure()
 
     @getDependencies = progeny
-      extension: @extension
       rootPath: @config.paths.root
 
   configure: ->
