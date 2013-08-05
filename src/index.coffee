@@ -112,7 +112,7 @@ module.exports = class JadedBrunchPlugin
                 callback err, null
               else
                 # TODO: Tell brunch to skip this compilation.
-                callback()
+                callback(null, output)
 
       else
         callback null, "module.exports = #{template.toString()};"
