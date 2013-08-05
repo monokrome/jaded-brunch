@@ -111,7 +111,6 @@ module.exports = class JadedBrunchPlugin
               if err
                 callback err, null
               else
-                # TODO: Tell brunch to skip this compilation.
                 callback()
 
       else
