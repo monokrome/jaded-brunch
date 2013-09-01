@@ -1,3 +1,7 @@
+# jaded-brunch 1.7.3
+
+- Removed unnecessary extension option.
+
 # jaded-brunch 1.7.2
 
 - Modified getDependencies to use progeny
