@@ -1,3 +1,8 @@
+# jaded-brunch 1.7.4
+
+- Fixed issue with latest brunch not considering undefined as static to
+  the callback function in compile.
+
 # jaded-brunch 1.7.3
 
 - Removed unnecessary extension option.
