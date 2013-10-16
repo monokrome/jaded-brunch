@@ -64,20 +64,14 @@ module.exports = class JadedBrunchPlugin
     options = _.extend {}, @jadeOptions,
       locals: data
 
-  templateFactory: (options, templatePath, callback) ->
-    # TODO: Should I really assume utf-8?
-    fs.readFile templatePath, 'utf-8', (error, data) ->
-      if error
-        deferred.reject error
-        return
+  templateFactory: (data, options, templatePath, callback) ->
+    try
+      template = jade.compile data, options
 
-      try
-        template = jade.compile data, options
+    catch e
+      error = e
 
-      catch e
-        error = e
-
-      callback error, template
+    callback error, template
 
   compile: (data, originalPath, callback) ->
     templatePath = path.resolve originalPath
@@ -132,4 +126,4 @@ module.exports = class JadedBrunchPlugin
       else
         callback null, "module.exports = #{template.toString()};"
 
-    @templateFactory options, templatePath, successHandler
+    @templateFactory data, options, templatePath, successHandler
