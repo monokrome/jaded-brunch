@@ -31,26 +31,28 @@ module.exports = class JadedBrunchPlugin
       rootPath: @config.paths.root
 
   configure: ->
-    if @config.paths?.public?
+    if @config.plugins?.jaded?
+      options = @config?.plugins?.jaded or @config.plugins.jade
+    else if @config.plugins?.jade?
+      options = @config?.plugins?.jaded or @config.plugins.jade
+    else
+      options = {}
+
+    if options.staticPatterns?
+      @staticPatterns = options.staticPatterns
+
+    if options.path?
+      @staticPath = options.path
+    else if @config.paths?.public?
       @staticPath = @config.paths.public
 
-    if @config.plugins?.jaded? or @config.plugins?.jade?
-      options = @config?.plugins?.jaded or @config.plugins.jade
-
-      if options.staticPatterns?
-        @staticPatterns = options.staticPatterns
-
-      if options.path?
-        @staticPath = options.path
-
-      if options.jade?
-        @jadeOptions = options.jade
-
-      else
-        @jadeOptions = _.without options.jade, [
-          'staticPatterns'
-          'path'
-        ]
+    if options.jade?
+      @jadeOptions = options.jade
+    else
+      @jadeOptions = _.without options.jade, [
+        'staticPatterns'
+        'path'
+      ]
 
   makeOptions: (data) ->
     # Allow for default data in the jade options hash
