@@ -67,9 +67,12 @@ module.exports = class JadedBrunchPlugin
       else
         try
           template = jade.compile data, options
-          deferred.resolve template
+          conole.log('wtf');
         catch error
           deferred.reject error
+          return
+
+        deferred.resolve template
 
     return deferred.promise
 
