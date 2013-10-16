@@ -124,7 +124,7 @@ module.exports = class JadedBrunchPlugin
               if err
                 callback err, null
               else
-                callback null, null
+                callback()
 
       else
         callback null, "module.exports = #{template.toString()};"
