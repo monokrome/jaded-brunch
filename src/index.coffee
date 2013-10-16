@@ -54,6 +54,7 @@ module.exports = class JadedBrunchPlugin
       ]
 
     @jadeOptions.compileDebug ?= @config.optimize is false
+    @jadeOptions.pretty ?= @config.optimize is false
 
 
   makeOptions: (data) ->
