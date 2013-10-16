@@ -7,3 +7,6 @@ describe 'Plugin', ->
 
   it 'should be a template plugin', ->
     expect(@plugin.type).to.equal 'template'
+
+  it 'should handle the `jade` extension', ->
+    expect(@plugin.extension).to.equal 'jade'
