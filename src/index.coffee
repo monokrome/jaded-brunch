@@ -62,17 +62,15 @@ module.exports = class JadedBrunchPlugin
 
     # TODO: Should I really assume utf-8?
     fs.readFile templatePath, 'utf-8', (error, data) ->
-      if error
-        deferred.reject new Error error
-      else
-        try
-          template = jade.compile data, options
-          conole.log('wtf');
-        catch error
-          deferred.reject error
-          return
+      deferred.reject new Error error if error
 
+      try
+        template = jade.compile data, options
         deferred.resolve template
+
+      catch error
+        deferred.reject error
+
 
     return deferred.promise
 
