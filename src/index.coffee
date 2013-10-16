@@ -4,7 +4,6 @@ path = require 'path'
 mkdirp = require 'mkdirp'
 progeny = require 'progeny'
 
-Q = require 'q'
 _ = require 'lodash'
 
 jadePath = path.dirname require.resolve 'jade'
@@ -65,22 +64,20 @@ module.exports = class JadedBrunchPlugin
     options = _.extend {}, @jadeOptions,
       locals: data
 
-  templateFactory: (options, templatePath) ->
-    deferred = Q.defer()
-
+  templateFactory: (options, templatePath, callback) ->
     # TODO: Should I really assume utf-8?
     fs.readFile templatePath, 'utf-8', (error, data) ->
-      deferred.reject new Error error if error
+      if error
+        deferred.reject error
+        return
 
       try
         template = jade.compile data, options
-        deferred.resolve template
 
-      catch error
-        deferred.reject error
+      catch e
+        error = e
 
-
-    return deferred.promise
+      callback error, template
 
   compile: (data, originalPath, callback) ->
     templatePath = path.resolve originalPath
@@ -96,7 +93,11 @@ module.exports = class JadedBrunchPlugin
 
     errorHandler = (error) -> callback error
 
-    successHandler = (template) =>
+    successHandler = (error, template) =>
+      if error?
+        callback error
+        return
+
       if pathTestResults.length
         output = template options
 
@@ -116,7 +117,7 @@ module.exports = class JadedBrunchPlugin
         outputDirectory = path.dirname outputPath
 
         # TODO: Save this block from an eternity in callback hell.
-        mkdirp outputDirectory, (err)->
+        mkdirp outputDirectory, (err) ->
           if err
             callback err, null
           else
@@ -134,6 +135,4 @@ module.exports = class JadedBrunchPlugin
 
     options.filename = options.filename or relativePath
 
-    promise = @templateFactory options, templatePath
-    promise.done successHandler
-    promise.fail errorHandler
+    @templateFactory options, templatePath, successHandler
