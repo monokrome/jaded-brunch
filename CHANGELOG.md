@@ -1,3 +1,8 @@
+# jaded-brunch 1.7.6
+
+- Fixed a bug regarding how @jadeOptions worked. Now they actually do work.
+- Leverage data passed in from brunch instead of reading data separately.
+
 # jaded-brunch 1.7.5
 
 - Fixed an issue causing jade errors to crash brunch.
