@@ -48,14 +48,10 @@ module.exports = class JadedBrunchPlugin
     if options.jade?
       @jadeOptions = options.jade
     else
-      @jadeOptions = _.without options, [
-        'staticPatterns'
-        'path'
-      ]
+      @jadeOptions = _.omit options, 'staticPatterns', 'path'
 
     @jadeOptions.compileDebug ?= @config.optimize is false
     @jadeOptions.pretty ?= @config.optimize is false
-
 
   makeOptions: (data) ->
     # Allow for default data in the jade options hash
@@ -85,7 +81,6 @@ module.exports = class JadedBrunchPlugin
 
   compile: (data, originalPath, callback) ->
     templatePath = path.resolve originalPath
-    options = @makeOptions data
 
     if not _.isArray @staticPatterns
       patterns = [@staticPatterns]
@@ -95,7 +90,10 @@ module.exports = class JadedBrunchPlugin
     relativePath = path.relative @projectPath, templatePath
     pathTestResults = _.filter patterns, (pattern) -> pattern.test relativePath
 
-    errorHandler = (error) -> callback error
+    options = _.extend {}, @jadeOptions,
+      client: pathTestResults.length == 0
+
+    options.filename ?= relativePath
 
     successHandler = (error, template) =>
       if error?
@@ -103,7 +101,7 @@ module.exports = class JadedBrunchPlugin
         return
 
       if pathTestResults.length
-        output = template options
+        output = template()
 
         staticPath = path.join @projectPath, @staticPath
         matches = relativePath.match pathTestResults[0]
@@ -133,10 +131,5 @@ module.exports = class JadedBrunchPlugin
 
       else
         callback null, "module.exports = #{template.toString()};"
-
-    options = _.extend {}, options,
-      client: pathTestResults.length == 0
-
-    options.filename = options.filename or relativePath
 
     @templateFactory options, templatePath, successHandler
