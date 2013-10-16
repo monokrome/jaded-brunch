@@ -34,8 +34,8 @@ module.exports = class JadedBrunchPlugin
     if @config.paths?.public?
       @staticPath = @config.paths.public
 
-    if @config.plugins?.jaded?
-      options = @config.plugins.jaded
+    if @config.plugins?.jaded? or @config.plugins?.jade?
+      options = @config?.plugins?.jaded or @config.plugins.jade
 
       if options.staticPatterns?
         @staticPatterns = options.staticPatterns
