@@ -1,3 +1,17 @@
+# jaded-brunch 1.7.5
+
+- Fixed an issue causing jade errors to crash brunch.
+- The expected interface for settings is now simply in the 'jade' plugin
+  options. Any options that aren't specific to jaded-brunch are now forwarded
+  to jade.
+  - The previous structure will work until the next major release. (v1.8.0)
+  - The old 'jaded' options - as well as the 'jade' suboption - is now
+    deprecated in favor of the new approach.
+- When optimize is not false during compilation, jaded-brunch will not
+  compile jade templates containing debug content any more by default.
+- Templates will now be compiled as 'pretty' when optimize is false by default.
+- Added a Makefile.
+
 # jaded-brunch 1.7.4
 
 - Fixed issue with latest brunch not considering undefined as static to
