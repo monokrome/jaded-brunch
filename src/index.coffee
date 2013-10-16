@@ -40,11 +40,17 @@ module.exports = class JadedBrunchPlugin
       if options.staticPatterns?
         @staticPatterns = options.staticPatterns
 
+      if options.path?
+        @staticPath = options.path
+
       if options.jade?
         @jadeOptions = options.jade
 
-      if options.path?
-        @staticPath = options.path
+      else
+        @jadeOptions = _.without options.jade, [
+          'staticPatterns'
+          'path'
+        ]
 
   makeOptions: (data) ->
     # Allow for default data in the jade options hash
