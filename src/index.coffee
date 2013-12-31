@@ -85,7 +85,7 @@ module.exports = class JadedBrunchPlugin
     pathTestResults = _.filter patterns, (pattern) -> pattern.test relativePath
 
     options = _.extend {}, @jadeOptions,
-      client: pathTestResults.length == 0
+      compileClient: pathTestResults.length == 0
 
     options.filename ?= relativePath
 
