@@ -64,9 +64,14 @@ module.exports = class JadedBrunchPlugin
     options = _.extend {}, @jadeOptions,
       locals: data
 
-  templateFactory: (data, options, templatePath, callback) ->
+  templateFactory: (data, options, templatePath, callback, clientMode) ->
     try
-      template = jade.compile data, options
+      if clientMode is true
+        method = jade.compileClient
+      else
+        method = jade.compile
+
+      template = method data, options
 
     catch e
       error = e
@@ -83,9 +88,6 @@ module.exports = class JadedBrunchPlugin
 
     relativePath = path.relative @projectPath, templatePath
     pathTestResults = _.filter patterns, (pattern) -> pattern.test relativePath
-
-    options = _.extend {}, @jadeOptions,
-      compileClient: pathTestResults.length == 0
 
     options.filename ?= relativePath
 
@@ -124,6 +126,8 @@ module.exports = class JadedBrunchPlugin
                 callback()
 
       else
-        callback null, "module.exports = #{template.toString()};"
+        callback null, "module.exports = #{template};"
 
-    @templateFactory data, options, templatePath, successHandler
+    clientMode = pathTestResults.length == 0
+
+    @templateFactory data, options, templatePath, successHandler, clientMode
