@@ -3,8 +3,13 @@ fs = require 'fs'
 path = require 'path'
 mkdirp = require 'mkdirp'
 progeny = require 'progeny'
-
 _ = require 'lodash'
+
+moduleExists = (name) ->
+  try
+    require.resolve name
+  catch error
+    false
 
 jadePath = path.dirname require.resolve 'jade'
 
@@ -14,6 +19,7 @@ module.exports = class JadedBrunchPlugin
   extension: 'jade'
   jadeOptions: {}
 
+  outputExtension: 'html'
   staticPath: 'public'
   projectPath: path.resolve process.cwd()
 
@@ -37,6 +43,13 @@ module.exports = class JadedBrunchPlugin
     else
       options = {}
 
+    if options.filterPhp? and options.filterPhp and moduleExists 'jade-php'
+      jadephp = require 'jade-php'
+      jadephp jade
+
+    if options.outputExtension?
+      @outputExtension = options.outputExtension
+
     if options.staticPatterns?
       @staticPatterns = options.staticPatterns
 
@@ -48,7 +61,7 @@ module.exports = class JadedBrunchPlugin
     if options.jade?
       @jadeOptions = options.jade
     else
-      @jadeOptions = _.omit options, 'staticPatterns', 'path'
+      @jadeOptions = _.omit options, 'staticPatterns', 'path', 'filterPhp', 'outputExtension'
 
     @jadeOptions.compileDebug ?= @config.optimize is false
     @jadeOptions.pretty ?= @config.optimize is false
@@ -89,7 +102,7 @@ module.exports = class JadedBrunchPlugin
     relativePath = path.relative @projectPath, templatePath
     pathTestResults = _.filter patterns, (pattern) -> pattern.test relativePath
 
-    options = _.extend {}, @options
+    options = _.extend {}, @jadeOptions
     options.filename ?= relativePath
 
     successHandler = (error, template) =>
@@ -110,7 +123,7 @@ module.exports = class JadedBrunchPlugin
         if outputPath[extensionStartIndex..] == @extension
           outputPath = outputPath[0..extensionStartIndex-2]
 
-        outputPath = "#{outputPath}.html"
+        outputPath = "#{outputPath}.#{@outputExtension}"
 
         outputPath = path.join staticPath, outputPath
         outputDirectory = path.dirname outputPath
