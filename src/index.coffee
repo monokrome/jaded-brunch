@@ -3,13 +3,8 @@ fs = require 'fs'
 path = require 'path'
 mkdirp = require 'mkdirp'
 progeny = require 'progeny'
-_ = require 'lodash'
 
-moduleExists = (name) ->
-  try
-    require.resolve name
-  catch error
-    false
+_ = require 'lodash'
 
 jadePath = path.dirname require.resolve 'jade'
 
@@ -43,7 +38,7 @@ module.exports = class JadedBrunchPlugin
     else
       options = {}
 
-    if options.filterPhp? and options.filterPhp and moduleExists 'jade-php'
+    if options.filterPhp? and options.filterPhp
       jadephp = require 'jade-php'
       jadephp jade
 
