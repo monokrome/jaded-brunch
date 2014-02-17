@@ -10,7 +10,7 @@
   },
   "main": "./lib/index",
   "scripts": {
-    "prepublish": "make clean && make",
+    "prepublish": "coffee -o lib/ src/",
     "test": "node_modules/.bin/mocha --compilers coffee:coffee-script --require test/common.js"
   },
   "dependencies": {
