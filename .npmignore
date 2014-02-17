@@ -8,6 +8,5 @@ CVS/
 .DS_Store
 npm-debug.log
 test/
-src/
 CHANGELOG.md
 
