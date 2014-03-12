@@ -69,6 +69,7 @@ module.exports = class JadedBrunchPlugin
     ]
 
     jadeModule = options.module or 'jade'
+    @extension = options.extension or 'html'
     @jade = localRequire jadeModule
 
   makeOptions: (data) ->
@@ -128,7 +129,7 @@ module.exports = class JadedBrunchPlugin
         if outputPath[extensionStartIndex..] == @extension
           outputPath = outputPath[0..extensionStartIndex-2]
 
-        outputPath = "#{outputPath}.html"
+        outputPath = outputPath + '.' + @extension
 
         outputPath = path.join staticPath, outputPath
         outputDirectory = path.dirname outputPath
