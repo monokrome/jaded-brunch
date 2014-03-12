@@ -70,6 +70,7 @@ module.exports = class JadedBrunchPlugin
 
     jadeModule = options.module or 'jade'
     @extension = options.extension or 'html'
+    @clientExtension = options.clientExtension or @extension
     @jade = localRequire jadeModule
 
   makeOptions: (data) ->
@@ -95,7 +96,7 @@ module.exports = class JadedBrunchPlugin
     catch e
       error = e
 
-    callback error, template
+    callback error, template, clientMode
 
   compile: (data, originalPath, callback) ->
     templatePath = path.resolve originalPath
@@ -111,7 +112,7 @@ module.exports = class JadedBrunchPlugin
     options = _.extend {}, @options
     options.filename ?= relativePath
 
-    successHandler = (error, template) =>
+    successHandler = (error, template, clientMode) =>
       if error?
         callback error
         return
@@ -122,14 +123,19 @@ module.exports = class JadedBrunchPlugin
         staticPath = path.join @projectPath, @staticPath
         matches = relativePath.match pathTestResults[0]
 
+        if clientMode
+          extension = @clientExtension
+        else
+          extension = @extension
+
         outputPath = matches[matches.length-1]
 
-        extensionStartIndex = (outputPath.length - @extension.length)
+        extensionStartIndex = (outputPath.length - extension.length)
 
-        if outputPath[extensionStartIndex..] == @extension
+        if outputPath[extensionStartIndex..] == extension
           outputPath = outputPath[0..extensionStartIndex-2]
 
-        outputPath = outputPath + '.' + @extension
+        outputPath = outputPath + '.' + extension
 
         outputPath = path.join staticPath, outputPath
         outputDirectory = path.dirname outputPath
