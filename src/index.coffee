@@ -1,4 +1,3 @@
-jade = require 'jade'
 fs = require 'fs'
 path = require 'path'
 mkdirp = require 'mkdirp'
@@ -6,7 +5,21 @@ progeny = require 'progeny'
 
 _ = require 'lodash'
 
-jadePath = path.dirname require.resolve 'jade'
+
+localRequire: (module) ->
+  try
+    modulePath = path.join process.cwd(), 'node_modules', module
+    return require modulePath
+
+  catch userError
+    throw userError unless userError.code is 'MODULE_NOT_FOUND'
+
+    try
+      return require module
+
+    catch localError
+      throw localError
+
 
 module.exports = class JadedBrunchPlugin
   brunchPlugin: yes
@@ -18,10 +31,6 @@ module.exports = class JadedBrunchPlugin
   projectPath: path.resolve process.cwd()
 
   staticPatterns: /^app(\/|\\)(.+)\.static\.jade$/
-
-  include: [
-    path.join jadePath, 'runtime.js'
-  ]
 
   constructor: (@config) ->
     @configure()
@@ -53,6 +62,15 @@ module.exports = class JadedBrunchPlugin
     @jadeOptions.compileDebug ?= @config.optimize is false
     @jadeOptions.pretty ?= @config.optimize is false
 
+    jadePath = path.dirname require.resolve 'jade'
+
+    @include = [
+      path.join jadePath, 'runtime.js'
+    ]
+
+    jadeModule = options.module or 'jade'
+    @jade = localRequire jadeModule
+
   makeOptions: (data) ->
     # Allow for default data in the jade options hash
     if @jadeOptions.locals?
@@ -67,9 +85,9 @@ module.exports = class JadedBrunchPlugin
   templateFactory: (data, options, templatePath, callback, clientMode) ->
     try
       if clientMode is true
-        method = jade.compileClient
+        method = @jade.compileClient
       else
-        method = jade.compile
+        method = @jade.compile
 
       template = method data, options
 
