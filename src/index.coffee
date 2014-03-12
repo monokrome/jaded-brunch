@@ -109,7 +109,7 @@ module.exports = class JadedBrunchPlugin
     relativePath = path.relative @projectPath, templatePath
     pathTestResults = _.filter patterns, (pattern) -> pattern.test relativePath
 
-    options = _.extend {}, @options
+    options = _.extend {}, @jadeOptions
     options.filename ?= relativePath
 
     successHandler = (error, template, clientMode) =>
