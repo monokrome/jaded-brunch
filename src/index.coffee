@@ -57,7 +57,7 @@ module.exports = class JadedBrunchPlugin
     if options.jade?
       @jadeOptions = options.jade
     else
-      @jadeOptions = _.omit options, 'staticPatterns', 'path', 'module', 'extension', 'clientExtension'
+      @jadeOptions = _.omit options, 'staticPatterns', 'path', 'module', 'extension', 'clientExtension', 'patches'
 
     @jadeOptions.compileDebug ?= @config.optimize is false
     @jadeOptions.pretty ?= @config.optimize is false
