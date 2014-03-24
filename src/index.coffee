@@ -6,7 +6,7 @@ progeny = require 'progeny'
 _ = require 'lodash'
 
 
-localRequire: (module) ->
+localRequire = (module) ->
   try
     modulePath = path.join process.cwd(), 'node_modules', module
     return require modulePath
@@ -57,7 +57,7 @@ module.exports = class JadedBrunchPlugin
     if options.jade?
       @jadeOptions = options.jade
     else
-      @jadeOptions = _.omit options, 'staticPatterns', 'path'
+      @jadeOptions = _.omit options, 'staticPatterns', 'path', 'module', 'extension', 'clientExtension'
 
     @jadeOptions.compileDebug ?= @config.optimize is false
     @jadeOptions.pretty ?= @config.optimize is false
@@ -69,9 +69,17 @@ module.exports = class JadedBrunchPlugin
     ]
 
     jadeModule = options.module or 'jade'
+
+    @jade = localRequire jadeModule
     @extension = options.extension or 'html'
     @clientExtension = options.clientExtension or @extension
-    @jade = localRequire jadeModule
+
+    patches = options.patches or []
+    patches = [patches] if _.isString patches
+
+    patches.map (patch) =>
+      patchModule = localRequire patch
+      patchModule @jade
 
   makeOptions: (data) ->
     # Allow for default data in the jade options hash
@@ -81,7 +89,7 @@ module.exports = class JadedBrunchPlugin
       locals = data
 
     # Allow for custom options to be passed to jade
-    options = _.extend {}, @jadeOptions,
+    return _.extend {}, @jadeOptions,
       locals: data
 
   templateFactory: (data, options, templatePath, callback, clientMode) ->
