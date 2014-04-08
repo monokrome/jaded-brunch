@@ -11,6 +11,7 @@
   "main": "./lib/index",
   "scripts": {
     "prepublish": "make clean && make",
+    "postinstall": "make clean && make",
     "test": "node_modules/.bin/mocha --compilers coffee:coffee-script --require test/common.js"
   },
   "dependencies": {
