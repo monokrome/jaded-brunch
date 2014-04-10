@@ -32,6 +32,10 @@ module.exports = class JadedBrunchPlugin
 
   staticPatterns: /^app(\/|\\)(.+)\.static\.jade$/
 
+  extensions:
+    static: 'html'
+    client: 'js'
+
   constructor: (@config) ->
     @configure()
 
@@ -71,13 +75,16 @@ module.exports = class JadedBrunchPlugin
     jadeModule = options.module or 'jade'
 
     @jade = localRequire jadeModule
-    @extension = options.extension or 'html'
-    @clientExtension = options.clientExtension or @extension
+
+    if options.extensions?
+      for key, value of options.extensions
+        @extensions[key] = value
 
     patches = options.patches or []
     patches = [patches] if _.isString patches
 
     patches.map (patch) =>
+      console.log patch
       patchModule = localRequire patch
       patchModule @jade
 
@@ -132,9 +139,9 @@ module.exports = class JadedBrunchPlugin
         matches = relativePath.match pathTestResults[0]
 
         if clientMode
-          extension = @clientExtension
+          extension = @extensions.client
         else
-          extension = @extension
+          extension = @extensions.static
 
         outputPath = matches[matches.length-1]
 
