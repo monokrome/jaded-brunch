@@ -3,7 +3,7 @@
   "description": "Adds jade support to brunch.",
   "author": "Brandon R. Stoner <monokrome@monokro.me>",
   "homepage": "https://github.com/monokrome/jaded-brunch",
-  "version": "1.7.10",
+  "version": "1.7.11",
   "repository": {
     "type": "git",
     "url": "git@github.com:monokrome/jaded-brunch.git"
@@ -11,7 +11,6 @@
   "main": "./lib/index",
   "scripts": {
     "prepublish": "make clean && make",
-    "postinstall": "make clean && make",
     "test": "node_modules/.bin/mocha --compilers coffee:coffee-script --require test/common.js"
   },
   "dependencies": {
