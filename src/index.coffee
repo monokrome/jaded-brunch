@@ -1,11 +1,13 @@
 fs = require 'fs'
 path = require 'path'
 mkdirp = require 'mkdirp'
-progeny = require 'progeny'
 
 _ = require 'lodash'
+progeny = require 'progeny'
 
 
+# Allows modules included by jaded-brunch to be overwritten by
+# a module in the current working directory's ./node_modules.
 localRequire = (module) ->
   try
     modulePath = path.join process.cwd(), 'node_modules', module
