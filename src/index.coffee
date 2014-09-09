@@ -135,7 +135,8 @@ module.exports = class JadedBrunchPlugin
         return
 
       if pathTestResults.length
-        output = template()
+        locals = options.locals or {}
+        output = template(locals)
 
         staticPath = path.join @projectPath, @staticPath
         matches = relativePath.match pathTestResults[0]
