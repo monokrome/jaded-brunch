@@ -128,6 +128,7 @@ module.exports = class JadedBrunchPlugin
 
     options = _.extend {}, @jadeOptions
     options.filename ?= relativePath
+    @options = options
 
     successHandler = (error, template, clientMode) =>
       if error?
@@ -135,7 +136,7 @@ module.exports = class JadedBrunchPlugin
         return
 
       if pathTestResults.length
-        output = template()
+        output = template(if @options.locals then @options.locals else {})
 
         staticPath = path.join @projectPath, @staticPath
         matches = relativePath.match pathTestResults[0]
