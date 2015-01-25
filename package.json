@@ -3,7 +3,7 @@
   "description": "Adds jade support to brunch.",
   "author": "Brandon R. Stoner <monokrome@monokro.me>",
   "homepage": "https://github.com/monokrome/jaded-brunch",
-  "version": "1.7.11",
+  "version": "1.7.12",
   "repository": {
     "type": "git",
     "url": "git@github.com:monokrome/jaded-brunch.git"
