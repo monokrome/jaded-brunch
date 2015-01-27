@@ -76,7 +76,7 @@ module.exports = class JadedBrunchPlugin
     jadePath = path.dirname require.resolve 'jade'
 
     @include = [
-      path.join jadePath, '..', runtime.js'
+      path.join jadePath, '..', 'runtime.js'
     ]
 
     jadeModule = options.module or 'jade'
