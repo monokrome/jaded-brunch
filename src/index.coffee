@@ -41,8 +41,11 @@ module.exports = class JadedBrunchPlugin
   constructor: (@config) ->
     @configure()
 
-    @getDependencies = progeny
+    discoverDependencies = progeny
       rootPath: @config.paths.root
+
+    @getDependencies = (compiler, data, path) ->
+      discoverDependencies data, path, compiler
 
   configure: ->
     if @config.plugins?.jaded?
