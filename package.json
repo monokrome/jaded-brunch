@@ -11,7 +11,7 @@
   "main": "./lib/index",
   "scripts": {
     "prepublish": "make clean && make",
-    "test": "node_modules/.bin/mocha --compilers coffee:coffee-script --require test/common.js"
+    "test": "node_modules/.bin/mocha"
   },
   "dependencies": {
     "jade": ">= 1.0.x < 2.0",
