@@ -47,6 +47,15 @@ module.exports = class JadedBrunchPlugin
     @getDependencies = (compiler, data, path) ->
       discoverDependencies data, path, compiler
 
+  getRuntimeFiles: (runtimeFiles) ->
+    if runtimeFiles?
+      return [] unless runtimeFiles
+      return runtimeFiles
+
+    return [
+      path.join jadePath, '..', 'runtime.js'
+    ]
+
   configure: ->
     if @config.plugins?.jaded?
       options = @config?.plugins?.jaded or @config.plugins.jade
@@ -78,10 +87,7 @@ module.exports = class JadedBrunchPlugin
 
     jadePath = path.dirname require.resolve 'jade'
 
-    @include = [
-      path.join jadePath, '..', 'runtime.js'
-    ]
-
+    @include = @getRuntimeFiles options.runtimeFiles
     jadeModule = options.module or 'jade'
 
     @jade = localRequire jadeModule
