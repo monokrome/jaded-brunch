@@ -48,6 +48,8 @@ module.exports = class JadedBrunchPlugin
       discoverDependencies data, path, compiler
 
   getRuntimeFiles: (runtimeFiles) ->
+    jadePath = path.dirname require.resolve 'jade'
+
     if runtimeFiles?
       return [] unless runtimeFiles
       return runtimeFiles
@@ -84,8 +86,6 @@ module.exports = class JadedBrunchPlugin
 
     @jadeOptions.compileDebug ?= @config.optimize is false
     @jadeOptions.pretty ?= @config.optimize is false
-
-    jadePath = path.dirname require.resolve 'jade'
 
     @include = @getRuntimeFiles options.runtimeFiles
     jadeModule = options.module or 'jade'
