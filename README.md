@@ -1,4 +1,4 @@
-jaded-brunch [![CircleCI](https://circleci.com/gh/monokrome/jaded-brunch.svg?style=svg)](https://circleci.com/gh/monokrome/jaded-brunch) [![Greenkeeper badge](https://badges.greenkeeper.io/monokrome/jaded-brunch.svg)](https://greenkeeper.io/)
+jaded-brunch [![CircleCI](https://circleci.com/gh/monokrome/jaded-brunch.svg?style=svg)](https://circleci.com/gh/monokrome/jaded-brunch)
 ============
 
 Adds flexible jade support to [brunch](http://brunch.io).
